@@ -9,13 +9,13 @@ exports.authCheck =async(req,resp,next)=>{
         //check ถ้าไม่มีToken
         console.log(authorization);
         if(!authorization){
-            return createError(400,"Missing Token!!!")
+            return createError(401,"Missing Token!!!")
         }
         //Bearer token.......ใช้ .slit แบ่งด้วยช่องว่าง
         const token =authorization.split(" ")[1]
 
         //verify token
-        jwt.verify(token,process.env.JWT_SECRET,(err,decode)=>{
+        const decode = jwt.verify(token,process.env.JWT_SECRET,(err,decode)=>{
             if(err){
                 return createError(401,"Unauthorized !!")
             }
@@ -28,3 +28,21 @@ exports.authCheck =async(req,resp,next)=>{
         next(error)
     }
 }
+
+exports.adminCheck =async(req,resp,next)=>{
+    try {
+        const {email} = req.user
+        const adminUser = await prisma.user.findUnique({
+            where:{
+                email:email
+            }
+        })
+        if(!adminUser || adminUser.role !=="admin"){
+            return resp.status(400).json({message:" Admin Access olny"})
+        }
+        next()
+    } catch (error) {
+        console.log(error)
+        resp.status(400).json({message:"Unauthorized Admin Access"})
+    }
+    }

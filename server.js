@@ -9,6 +9,8 @@ const app = express();
 const authRoute = require('./routes/auth-route')
 const categoryRoute = require('./routes/category-route')
 const productRoute = require('./routes/product-route')
+const userRoute = require('./routes/user-route');
+
 
 //Middlewares
 app.use(express.json());
@@ -20,6 +22,7 @@ app.use(morgan('dev'));
 app.use("/", authRoute);
 app.use("/category",categoryRoute)
 app.use("/products",productRoute)
+app.use('/',userRoute)
 
 app.use(handlerError)
 
