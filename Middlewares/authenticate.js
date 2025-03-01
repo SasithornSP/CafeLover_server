@@ -1,5 +1,7 @@
+const prisma = require('../configs/prisma');
 const createError = require('../utils/createError');
 const jwt = require('jsonwebtoken');
+
 
 //ใช้verify token
 exports.authCheck =async(req,resp,next)=>{
@@ -37,12 +39,12 @@ exports.adminCheck =async(req,resp,next)=>{
                 email:email
             }
         })
-        if(!adminUser || adminUser.role !=="admin"){
-            return resp.status(400).json({message:" Admin Access olny"})
+        if(!adminUser || adminUser.role !=="ADMIN"){
+            return resp.status(403).json({message:" Admin Access success"})
         }
         next()
     } catch (error) {
         console.log(error)
-        resp.status(400).json({message:"Unauthorized Admin Access"})
+        resp.status(500).json({message:"Admin Access Denied"})
     }
     }
