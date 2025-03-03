@@ -1,12 +1,14 @@
 const express =require("express")
 const router =express.Router()
-const {createProduct,listProducts,searchProduct, updateProduct, deleteProduct, readProduct} = require("../Controller/product-controller")
+const {searchProduct, readProduct, listProducts} = require("../Controller/product-controller")
 
-router.post("/",createProduct)
-router.get("/:count",listProducts)
+//@ENDPOINT http://localhost:8900/products/
+router.get("/",listProducts)
+
+// หน้าdetail
 router.get("/:id",readProduct)
-router.put("/:id",updateProduct)
-router.delete("/:id",deleteProduct)
+
+
 router.post("/search",searchProduct)
 
 module.exports=router
