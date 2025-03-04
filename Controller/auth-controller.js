@@ -7,7 +7,7 @@ const createError = require('../utils/createError');
 
 exports.register = async(req,resp,next)=>{
     try {
-        const { firstName, lastName, email, password } = req.body
+        const { firstName, lastName,mobile,email, password } = req.body
         if(!firstName || !lastName || !email || !password){
             return resp.status(400).json({message:"Please fill in all fields"})
         }
@@ -25,6 +25,7 @@ exports.register = async(req,resp,next)=>{
             data:{
                 firstName:firstName,
                 lastName:lastName,
+                mobile:mobile,
                 email:email,
                 password:hashPassword
             }

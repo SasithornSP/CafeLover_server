@@ -19,19 +19,19 @@ enum Role {
 }
 
 model user {
-  id              Int        @id @default(autoincrement())
-  firstName       String
-  lastName        String
-  email           String?    @unique
-  mobile          String?    @unique
-  password        String
-  role            Role       @default(USER)
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
-  orders          order[]
-  cartItems       cartItem[]
-  receipts        receipt[]
-  points          point[]
+  id        Int        @id @default(autoincrement())
+  firstName String
+  lastName  String
+  email     String?    @unique
+  mobile    String?    @unique
+  password  String
+  role      Role       @default(USER)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  orders    order[]
+  cartItems cartItem[]
+  receipts  receipt[]
+  points    point[]
 }
 
 model category {
@@ -68,9 +68,15 @@ model order {
   orderItems orderItem[]
 }
 
+enum EAT {
+  DINEIN
+  TAKEAWAY
+}
+
 model orderItem {
   id        Int      @id @default(autoincrement())
   quantity  Int
+  eat   EAT      @default(DINEIN)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -82,11 +88,19 @@ model orderItem {
   receiptId Int?
 }
 
+enum Sweetness {
+  NoSweetness
+  lessSweetness
+  Sweet
+}
+
 model cartItem {
-  id        Int      @id @default(autoincrement())
-  quantity  Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         Int       @id @default(autoincrement())
+  quantity   Int
+  sweetness  Sweetness @default(Sweet)
+  additional String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 
   userId    Int
   user      user    @relation(fields: [userId], references: [id], onDelete: Cascade)

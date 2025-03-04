@@ -33,25 +33,57 @@ exports.readProduct = async(req, resp, next) => {
     } 
 }
 
+const handleQuery = async (req, resp, query) => {
+    try {
+        const products = await prisma.product.findMany({
+            where: {
+                name: {
+                    contains: query,
+                }
+            },
+            include: {
+                category: true,
+            }
+
+        })
+        resp.json(products)
+    } catch (err) {
+        //err
+        console.log(err)
+        resp.status(500).json({ message: "Search Error" })
+    }
+}
+const handleCategory = async (req, resp, categoryId) => {
+    try {
+        const products = await prisma.product.findMany({
+            where: {
+                categoryId: {
+                    in: categoryId.map((id) => Number(id))
+                }
+            },
+            include: {
+                category: true,
+            }
+        })
+        resp.json(products)
+    } catch (err) {
+        console.log(err)
+        resp.status(500).json({ message: 'Server Error ' })
+    }
+}
 
 exports.searchProduct = async(req, resp, next) => {
     try {
-        const { query } = req.body
+        const { query, category } = req.body
         if(query){
-            const products = await prisma.product.findMany({
-                where: {
-                    name: {
-                        contains: query
-                    }
-                },
-                include: {
-                    category: true,
-                    image: true
-                }
-        })}
-        resp.json(products)
+            const products = await handleQuery(req,resp,query) 
+        }
+        // if(category){
+        //     const category = await handleCategory(req,resp,prisma.category)
+        // }
+        // resp.json(products)
     } catch (error) {
         next(error);
-        resp.status(500).json({ message: 'Seaech error' });
+        // resp.status(500).json({ message: 'Seaech Server error' });
     } 
 }

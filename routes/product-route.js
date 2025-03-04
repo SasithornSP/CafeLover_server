@@ -8,7 +8,7 @@ router.get("/",listProducts)
 // หน้าdetail
 router.get("/:id",readProduct)
 
-
+// หน้าเมนู
 router.post("/search",searchProduct)
 
 module.exports=router
