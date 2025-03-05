@@ -1,19 +1,21 @@
 const express =require("express")
 const router =express.Router()
-const {listUsers, changeStatus, changeRole, userCart, getUserCart, deleteUserCart, userOrder, getUserOrder} = require("../Controller/user-controller")
+const {listUsers, changeStatus, changeRole, userCart, getUserCart, deleteUserCart, userOrder, getUserOrder, getUsers, createOrder} = require("../Controller/user-controller")
 const { authCheck, adminCheck } = require("../Middlewares/authenticate")
 
-router.get('/users',authCheck,adminCheck,listUsers)
-router.post('/changeStatus',authCheck,adminCheck,changeStatus)
-router.post('/changeRole',authCheck,adminCheck,changeRole)
+//@ENDPOINT http://localhost:8900/users
+router.get('/users',authCheck,adminCheck,getUsers)
+router.post('/users',authCheck,adminCheck,getUsers)
+// router.post('/changeStatus',authCheck,adminCheck,changeStatus)
+// router.post('/changeRole',authCheck,adminCheck,changeRole)
 
-router.post('/user/cart',authCheck,userCart)
-router.get('/user/cart',authCheck,getUserCart)
-router.delete('/user/cart',authCheck,deleteUserCart)
+// router.post('/users/cart',authCheck,userCart)
+// router.get('/users/cart',authCheck,getUserCart)
+// router.delete('/users/cart',authCheck,deleteUserCart)
 
+// order
+router.post('/users/order',authCheck,createOrder)
 
-router.post('/user/order',authCheck,userOrder)
-router.get('/user/order',authCheck,getUserOrder)
 
 
 
