@@ -11,7 +11,7 @@ exports.listProducts = async(req, resp, next) => {
         resp.json(products);
     } catch (error) {
         next(error);
-        resp.status(500).json({ message: 'server error' });
+        
     } 
 }
 

@@ -15,8 +15,11 @@ const paymentRoute =require('./routes/payment-route')
 
 //Middlewares
 app.use(express.json());
+//ปิดให้เซิร์ฟเวอร์รับและแปลงข้อมูล JSON จาก request body
 app.use(Cors());
+// เปิดใช้งาน CORS เพื่ออนุญาตให้เว็บอื่นเข้าถึง API
 app.use(morgan('dev'));
+// ใช้ morgan แสดง log การทำงานของ API ในรูปแบบ dev
 
 
 //Use Routes

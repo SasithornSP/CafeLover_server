@@ -14,23 +14,23 @@ exports.getUsers = async(req, resp) => {
         resp.status(400).json({message: "Could not users"})
     }
 }
-exports.listUsers = async(req, resp) => {
-    try {
-       const users = await prisma.user.findMany({
-        select: {
-            id: true,
-            name: true,
-            email: true,
-            role: true,
-            // cart: true,
-            // order: true
-        }
-       })
-         resp.json(users)
-    } catch (error) {
-        resp.status(400).json({message: "Could not list users"})
-    }
-}
+// exports.listUsers = async(req, resp) => {
+//     try {
+//        const users = await prisma.user.findMany({
+//         select: {
+//             id: true,
+//             name: true,
+//             email: true,
+//             role: true,
+//             // cart: true,
+//             // order: true
+//         }
+//        })
+//          resp.json(users)
+//     } catch (error) {
+//         resp.status(400).json({message: "Could not list users"})
+//     }
+// }
 
 // exports.changeStatus = async(req, resp) => {
 //     try {
@@ -145,32 +145,32 @@ exports.listUsers = async(req, resp) => {
 //     }
 // }
 
-exports.deleteUserCart = async(req, resp) => {
-    try {
-        const cart = await prisma.cartItem.findFirst({
-            where: {
-                orderById: Number(req.user.id)
-            }})
-            if(!cart){
-                return resp.status(400).json({message: "No Cart"})
-            }
-//Delete cart
-            const deleteCart = await prisma.cartItem.deleteMany({
-                where: {
-                    id: cart.id
-                }
-            })
-            const deleteCartItem = await prisma.cartItem.deleteMany({
-                where: {
-                    orderById: Number(req.user.id)
-                }
-            })
-            console.log(deleteCartItem);
-        resp.json({message:"Cart delete successfull", deletedCount: deleteCartItem.count})
-    } catch (error) {
-        resp.status(400).json({message: "Could not deleteUserCart"})
-    }
-}
+// exports.deleteUserCart = async(req, resp) => {
+//     try {
+//         const cart = await prisma.cartItem.findFirst({
+//             where: {
+//                 orderById: Number(req.user.id)
+//             }})
+//             if(!cart){
+//                 return resp.status(400).json({message: "No Cart"})
+//             }
+// //Delete cart
+//             const deleteCart = await prisma.cartItem.deleteMany({
+//                 where: {
+//                     id: cart.id
+//                 }
+//             })
+//             const deleteCartItem = await prisma.cartItem.deleteMany({
+//                 where: {
+//                     orderById: Number(req.user.id)
+//                 }
+//             })
+//             console.log(deleteCartItem);
+//         resp.json({message:"Cart delete successfull", deletedCount: deleteCartItem.count})
+//     } catch (error) {
+//         resp.status(400).json({message: "Could not deleteUserCart"})
+//     }
+// }
 
 exports.createOrder = async (req, resp) => {
     try {
@@ -203,12 +203,12 @@ exports.createOrder = async (req, resp) => {
       resp.status(400).json({ message: "Could not create order", error: error.message });
     }
   };
-exports.userOrder = async(req, resp) => {
-    try {
-        resp.status(200).json({"message":"Hello userOrder"})
-    } catch (error) {
-        resp.status(400).json({message: "Could not userOrder"})
-    }
-}
+// exports.userOrder = async(req, resp) => {
+//     try {
+//         resp.status(200).json({"message":"Hello userOrder"})
+//     } catch (error) {
+//         resp.status(400).json({message: "Could not userOrder"})
+//     }
+// }
 
 

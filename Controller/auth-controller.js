@@ -1,8 +1,8 @@
-const prisma = require('../configs/prisma');
-const jwt = require('jsonwebtoken')
+const prisma = require('../configs/prisma'); // ใช้ Prisma จัดการฐานข้อมูล
+const jwt = require('jsonwebtoken')  // ใช้ JWT สำหรับสร้าง Token
 
-const bcrypt = require('bcryptjs');
-const createError = require('../utils/createError');
+const bcrypt = require('bcryptjs'); // ใช้ bcrypt.js สำหรับ Hash Password
+const createError = require('../utils/createError'); // ฟังก์ชันสร้าง error response
 
 
 exports.register = async(req,resp,next)=>{
@@ -58,7 +58,7 @@ exports.login = async(req,resp,next)=>{
         if(!isMatch){
             return createError(400,"Email,password is invalid")
         }
-        //Generate token
+        //Generate JWT token
         const payload ={
             id:user.id,
             email:user.email,
@@ -83,7 +83,7 @@ exports.login = async(req,resp,next)=>{
 
 exports.currentUser = async (req,resp,next)=>{
     try {
-        const {email}= req.user
+        const {email}= req.user // ดึง email จาก Token ที่ decode แล้ว
         console.log(email);
         const profile =await prisma.user.findFirst({
             where:{email:email},
